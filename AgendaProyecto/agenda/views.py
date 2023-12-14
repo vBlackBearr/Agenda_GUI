@@ -10,3 +10,7 @@ def login(request):
 
 def home(request):
     return render(request, 'home.html')
+
+
+def agenda(request):
+    return render(request, 'agenda.html')
