@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'AgendaProyecto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'equipo1',
+        'USER': 'root',
+        'PASSWORD': '12345678',
+        'HOST': 'database-itec.crvlwakzi7le.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
