@@ -1,5 +1,5 @@
 config = {
-    'user': 'tu_usuario',
-    'password': 'tu_contraseña',
-    'dsn': 'tu_dsn'  # Por ejemplo, "localhost:1521/orcl"
+    'user': 'SV_CENTRAL',
+    'password': 'topicos12345',
+    'dsn': '127.0.0.1:49161/xe'
 }
