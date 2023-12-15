@@ -116,3 +116,15 @@ def merge(request):
 def merge_contacto_seleccionado(request, contacto_id):
     print("Merge ", contacto_id)
     return redirect('agenda')
+
+
+def eliminar_contacto(request, contacto_id):
+    contacto = get_object_or_404(Contacto, pk=contacto_id)
+
+    # Eliminar la instancia del modelo
+    contacto.persona.delete()
+
+    # Redireccionar a la página deseada después de eliminar
+    # Puedes cambiar 'home' por la URL a la que quieres redirigir después de eliminar
+    return redirect('agenda')
+

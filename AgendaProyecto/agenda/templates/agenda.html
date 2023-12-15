@@ -75,7 +75,7 @@
             <td>{{ contacto.propietario.nombre }}</td>
             <td class="action-buttons">
                 <a href="{% url 'editar_contacto' contacto.id %}" class="btn btn-primary">Editar</a>
-                <button class="btn btn-danger">Eliminar</button>
+                 <a href="{% url 'eliminar_contacto' contacto.id %}" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
         {% endfor %}
