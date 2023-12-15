@@ -14,17 +14,21 @@
             justify-content: center;
             align-items: center;
         }
+
         .agenda-table {
             width: 80%;
             margin: 50px auto;
         }
+
         .table th, .table td {
             text-align: center;
         }
+
         .action-buttons {
             display: flex;
             justify-content: space-around;
         }
+
         .btn {
             padding: 5px 10px;
             font-size: 14px;
@@ -32,33 +36,53 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 class="text-center mb-4">Agenda</h2>
-        <table class="table agenda-table">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Propietario</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Iterar sobre los registros de la base de datos -->
-                {% for contacto in contactos %}
-                    <tr>
-                        <td>{{ contacto.persona.nombre }} {{ contacto.persona.ap_paterno }} {{ contacto.persona.ap_materno }}</td>
-                        <td>{{ contacto.propietario.nombre }}</td>
-                        <td class="action-buttons">
-                            <a href="{% url 'editar_contacto' contacto.id %}" class="btn btn-primary">Editar</a>
-                            <button class="btn btn-danger">Eliminar</button>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container">
+    <h2 class="text-center mb-4">Agenda</h2>
+
+    <a href="{% url 'formulario_contacto' %}" class="btn btn-success mb-3">Agregar Contacto</a>
+
+    <div class="mb-3">
+        <label for="searchInput" class="form-label">Buscar por Nombre:</label>
+        <input type="text" class="form-control" id="searchInput" placeholder="Ingrese el nombre">
     </div>
 
-    <!-- Agrega los scripts de Bootstrap (al final del cuerpo) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <table class="table agenda-table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Propietario</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterar sobre los registros de la base de datos -->
+        {% for contacto in contactos %}
+        <tr>
+            <td>{{ contacto.persona.nombre }} {{ contacto.persona.ap_paterno }} {{ contacto.persona.ap_materno }}</td>
+            <td>{{ contacto.propietario.nombre }}</td>
+            <td class="action-buttons">
+                <a href="{% url 'editar_contacto' contacto.id %}" class="btn btn-primary">Editar</a>
+                <button class="btn btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Agrega los scripts de Bootstrap (al final del cuerpo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+        $(document).ready(function(){
+            // Función para filtrar la tabla por nombre en tiempo real
+            $("#searchInput").on("input", function() {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+</script>
+    </body>
+    </html>
