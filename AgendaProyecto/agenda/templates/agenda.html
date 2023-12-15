@@ -38,19 +38,22 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Propietario</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí puedes iterar sobre los registros de la base de datos -->
-                <tr>
-                    <td>Nombre del Contacto</td>
-                    <td class="action-buttons">
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Repite este bloque para cada registro -->
+                <!-- Iterar sobre los registros de la base de datos -->
+                {% for contacto in contactos %}
+                    <tr>
+                        <td>{{ contacto.persona.nombre }} {{ contacto.persona.ap_paterno }} {{ contacto.persona.ap_materno }}</td>
+                        <td>{{ contacto.propietario.nombre }}</td>
+                        <td class="action-buttons">
+                            <a href="{% url 'editar_contacto' contacto.id %}" class="btn btn-primary">Editar</a>
+                            <button class="btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

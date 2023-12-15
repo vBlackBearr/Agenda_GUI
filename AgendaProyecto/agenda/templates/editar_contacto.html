@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Encabezado... -->
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Contacto</h2>
+
+    <form action="" method="post">
+    {% csrf_token %}
+
+    <!-- Formulario de Persona -->
+    {{ persona_form.as_p }}
+
+    <!-- Formulario de Direccion -->
+    {{ direccion_form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-eaQ8mWlO6MYlZBTO3qVufDviyRq3PPHAfQeUKBmEj5EdA1s3B1d+8Uq4vDSc5J" crossorigin="anonymous"></script>
+</body>
+</html>
