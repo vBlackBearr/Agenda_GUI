@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Direccion, Persona, Contacto
+from .models import Direccion, Persona, Contacto, Telefono, Correo
 from .forms import ContactoForm, PersonaForm, DireccionForm
 
 
@@ -40,8 +40,6 @@ def crear_contacto(request):
         nombre = request.POST.get('nombre')
         ap_paterno = request.POST.get('ap_paterno')
         ap_materno = request.POST.get('ap_materno')
-        correo = request.POST.get('correo')
-        telefono = request.POST.get('telefono')
 
         # Crear la dirección
         direccion = Direccion.objects.create(
@@ -56,10 +54,18 @@ def crear_contacto(request):
         persona = Persona.objects.create(
             nombre=nombre,
             ap_paterno=ap_paterno,
-            ap_materno=ap_materno,
-            correo=correo,
-            telefono=telefono
+            ap_materno=ap_materno
         )
+
+        # Agregar correos y teléfonos a la persona
+        correos = request.POST.getlist('correos[]')
+        telefonos = request.POST.getlist('telefonos[]')
+
+        for correo in correos:
+            Correo.objects.create(persona=persona, correo=correo)
+
+        for telefono in telefonos:
+            Telefono.objects.create(persona=persona, telefono=telefono)
 
         # Crear el contacto asociando la dirección y la persona
         contacto = Contacto.objects.create(
@@ -98,3 +104,15 @@ def editar_contacto(request, contacto_id):
     }
 
     return render(request, 'editar_contacto.html', context)
+
+
+def merge(request):
+    contactos = Contacto.objects.all()
+
+    context = {'contactos': contactos}
+    return render(request, 'merge.html', context)
+
+
+def merge_contacto_seleccionado(request, contacto_id):
+    print("Merge ", contacto_id)
+    return redirect('agenda')

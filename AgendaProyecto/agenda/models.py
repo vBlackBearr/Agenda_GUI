@@ -20,11 +20,25 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=255)
     ap_paterno = models.CharField(max_length=255)
     ap_materno = models.CharField(max_length=255)
-    correo = models.EmailField()
-    telefono = models.CharField(max_length=20)
 
     def __str__(self):
         return f"{self.nombre} {self.ap_paterno} {self.ap_materno}"
+
+
+class Telefono(models.Model):
+    persona = models.ForeignKey(Persona, related_name='telefonos', on_delete=models.CASCADE)
+    telefono = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.numero
+
+
+class Correo(models.Model):
+    persona = models.ForeignKey(Persona, related_name='correos', on_delete=models.CASCADE)
+    correo = models.EmailField()
+
+    def __str__(self):
+        return self.direccion
 
 
 class Contacto(models.Model):

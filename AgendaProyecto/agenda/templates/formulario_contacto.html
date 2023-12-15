@@ -9,6 +9,8 @@
 <body>
 
 <div class="container mt-5">
+    <a href="{% url 'agenda' %}" class="btn btn-secondary mb-3">Regresar</a>
+
     <h2 class="mb-4">Crear Contacto</h2>
 
     <form action="{% url 'crear_contacto' %}" method="post">
@@ -48,13 +50,19 @@
             <label for="ap_materno" class="form-label">Apellido Materno</label>
             <input type="text" class="form-control" id="ap_materno" name="ap_materno" required>
         </div>
-        <div class="mb-3">
+
+        <!-- Correos (múltiples) -->
+        <div class="mb-3" id="correos-container">
             <label for="correo" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="correo" name="correo" required>
+            <input type="email" class="form-control" name="correos[]" required>
+            <button type="button" class="btn btn-success mt-2" onclick="agregarCampo('correos-container', 'correo')">Agregar Correo</button>
         </div>
-        <div class="mb-3">
+
+        <!-- Teléfonos (múltiples) -->
+        <div class="mb-3" id="telefonos-container">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="telefono" name="telefono" required>
+            <input type="tel" class="form-control" name="telefonos[]" required>
+            <button type="button" class="btn btn-success mt-2" onclick="agregarCampo('telefonos-container', 'telefono')">Agregar Teléfono</button>
         </div>
 
         <button type="submit" class="btn btn-primary">Crear Contacto</button>
@@ -62,5 +70,27 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-eaQ8mWlO6MYlZBTO3qVufDviyRq3PPHAfQeUKBmEj5EdA1s3B1d+8Uq4vDSc5J" crossorigin="anonymous"></script>
+<script>
+    function agregarCampo(containerId, tipoCampo) {
+        var container = document.getElementById(containerId);
+        var nuevoCampo = document.createElement("div");
+        nuevoCampo.classList.add("mb-3");
+
+        var label = document.createElement("label");
+        label.setAttribute("for", tipoCampo);
+        label.classList.add("form-label");
+        label.textContent = tipoCampo.charAt(0).toUpperCase() + tipoCampo.slice(1);
+
+        var input = document.createElement("input");
+        input.setAttribute("type", tipoCampo === "telefono" ? "tel" : "email");
+        input.classList.add("form-control");
+        input.setAttribute("name", tipoCampo + "s[]");
+        input.required = true;
+
+        nuevoCampo.appendChild(label);
+        nuevoCampo.appendChild(input);
+        container.appendChild(nuevoCampo);
+    }
+</script>
 </body>
 </html>
